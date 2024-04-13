@@ -1,0 +1,15 @@
+= process:
+
+- get data from site
+- process data into page and volume lists
+- write lists to files
+
+== more details
+
+- check for current data files
+- - IF they exist select the latest data
+- - get data from site starting from the latest data
+- - ELSE get data from start starting from "20021104"
+- process response into data lists (pages/volumes)
+- - IF there are current data files, append the new data to them
+- - ELSE write data to files
