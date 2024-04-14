@@ -42,14 +42,15 @@ const getTitles = async () => {
 
 const parseTitles = async () => {
   const res = await getTitles();
-  const regex = new RegExp(/^([a-zA-Z0-9>'():.\-\s]*)(<\/option>)/g);
+  //const regex = new RegExp(/^([a-zA-Z0-9>'():.\-\s]*)(<\/option>)/g);
+  const regex = new RegExp(/^(.*)(<\/option>)/g);
   const list = res.split("<option value='");
   return list.map((item) => {
     //console.log(item)
     const date = item.substring(0, 8);
     const titleReg = item.match(regex);
     const matchedTitle = titleReg != null ? titleReg[0] : "";
-   // console.log(matchedTitle)
+    // console.log(matchedTitle)
     const titleStartIndex = matchedTitle.indexOf(">");
     const titleEndIndex = matchedTitle.indexOf("</option>");
     const title = matchedTitle.substring(titleStartIndex + 1, titleEndIndex);
@@ -57,16 +58,14 @@ const parseTitles = async () => {
   });
 };
 
-const collectVolumes = async () => {
+const getVolumeStarts = async () => {
   const titles = await parseTitles();
-  const volumeStarts = titles.filter(
-    (item) =>
-      (item.title.includes("First Page"))
+  const volumeStarts = titles.filter((item) =>
+    item.title.includes("First Page")
   );
-   console.log(volumeStarts);
-   return volumeStarts
+  return volumeStarts;
 };
-collectVolumes();
+getVolumeStarts();
 
 // PageType = {pageNumber: "number", date: "date", title: "title", volumeNumber: "number"}
 // collect volume into {volumeStart: "date", volumeNumber: "number", pages: PageType[]}
