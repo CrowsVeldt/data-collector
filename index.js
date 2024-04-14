@@ -18,11 +18,15 @@ const getNextDate = async (res) => {
 const getNextPage = async (date) => {
   const nextPageDate = await getNextDate(getData(date))
   const nextPage = await getData(nextPageDate)
-  console.log(nextPage)
   return nextPage;
 };
 
-getNextPage("20021106")
+const recordDates = async () => {
+    const firstDate = "20021104"
+    const nextDate = getNextDate(firstDate)
+}
+
+// getNextPage("20021106")
 
 
 // option value='20021104', for titles/volumes
