@@ -58,6 +58,8 @@ const parseTitles = async () => {
   });
 };
 
+// VOLUME COLLECTION FUNCTIONS
+
 const getVolumeStarts = async () => {
   const titles = await parseTitles();
   const volumeStarts = titles.filter((item) =>
@@ -65,7 +67,20 @@ const getVolumeStarts = async () => {
   );
   return volumeStarts;
 };
+
 getVolumeStarts();
 
+//collectVolumes => VolumeType[]
+// pages = []
+// volumes = []
+// volumeDates = step over dates from ${Volume (A) Start} to ${Volume (B) Start - 1}
+// volumePages = volumeDates.map((date, index) => {
+//  const page = {pageNumber: index, date: date, title: title, volumeNumber: (A)}
+//  pages.push(page)
+//  return page
+// )}
+// volumes.push({volumeStart: ${Volume (A) Start}, volumeNumber: (A), pages: volumePages})
+// return [pages, volumes]
+
 // PageType = {pageNumber: "number", date: "date", title: "title", volumeNumber: "number"}
-// collect volume into {volumeStart: "date", volumeNumber: "number", pages: PageType[]}
+// VolumeType = {volumeStart: "date", volumeNumber: "number", pages: PageType[]}
