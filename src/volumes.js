@@ -1,4 +1,5 @@
-const {parseTitles} = require("./titles")
+const { parseTitles } = require("./titles");
+const fs = require("node:fs/promises");
 
 const getVolumeStarts = async () => {
   const titles = await parseTitles();
@@ -12,23 +13,47 @@ const getVolumeStarts = async () => {
 const collectVolumes = async () => {
   const pages = [];
   const volumes = [];
+  const titles = await fs.readFile("lists/titleList.json", "utf8")
+  const parsedTitles = JSON.parse(titles)
 
-  // get dates here
+  const dates = await fs.readFile("lists/dateList.json", "utf8");
+  const parsedDates = JSON.parse(dates);
 
   const volumeStarts = await getVolumeStarts();
-  volumeStarts.map((item, index) => {
-    const firstDate = item.date;
-    const lastDate = volumeStarts[index + 1] != null ? volumeStarts[index + 1].date : "";
-  });
 
-  // volumeDates = step over dates from ${Volume (A) Start} to ${Volume (B) Start - 1}
-  // volumePages = volumeDates.map((date, index) => {
-  //  const page = {pageNumber: index, date: date, title: title, volumeNumber: (A)}
-  //  pages.push(page)
-  //  return page
-  // )}
-  // volumes.push({volumeStart: ${Volume (A) Start}, volumeNumber: (A), pages: volumePages})
-  // return [pages, volumes]
+  volumeStarts.map((item, volumeIndex) => {
+    const lastDate =
+      volumeStarts[volumeIndex + 1] != null ? volumeStarts[volumeIndex + 1].date : "";
+
+    // volumeDates = step over dates from ${Volume (A) Start} to ${Volume (B) Start - 1}
+    const volumeDates = parsedDates.slice(
+      parsedDates.indexOf(item.date),
+      parsedDates.indexOf(lastDate)
+    );
+
+    const volumePages = volumeDates.map((date, pageIndex) => {
+      const title = parsedTitles.find(item => item.date === date) != null ? parsedTitles[parsedTitles.indexOf(date)] : "" 
+
+      const page = {
+        pageNumber: pageIndex + 1,
+        date: date,
+        title: title,
+        volumeNumber: volumeIndex + 1,
+      };
+      pages.push(page);
+      console.log(page)
+      return page;
+    });
+  });
 };
+// volumePages = volumeDates.map((date, index) => {
+//  const page = {pageNumber: index, date: date, title: title, volumeNumber: (A)}
+//  pages.push(page)
+//  return page
+// )}
+// volumes.push({volumeStart: ${Volume (A) Start}, volumeNumber: (A), pages: volumePages})
+// return [pages, volumes]
 // PageType = {pageNumber: "number", date: "date", title: "title", volumeNumber: "number"}
 // VolumeType = {volumeStart: "date", volumeNumber: "number", pages: PageType[]}
+
+module.exports = { collectVolumes };
