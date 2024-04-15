@@ -1,29 +1,33 @@
-const { parseTitles } = require("./titles");
+// const { parseTitles } = require("./titles");
 const fs = require("node:fs/promises");
 
-const getVolumeStarts = async () => {
-  const titles = await parseTitles();
-  const volumeStarts = titles.filter((item) =>
-    item.title.includes("First Page")
-  );
-  return volumeStarts;
-};
+// const getVolumeStarts = async () => {
+//   const titles = await parseTitles();
+//   const volumeStarts = titles.filter((item) =>
+//     item.title.includes("First Page")
+//   );
+//   return volumeStarts;
+// };
 
 //collectVolumes => VolumeType[]
 const collectVolumes = async () => {
   const pages = [];
   const volumes = [];
-  const titles = await fs.readFile("lists/titleList.json", "utf8")
-  const parsedTitles = JSON.parse(titles)
+  const titles = await fs.readFile("lists/titleList.json", "utf8");
+  const parsedTitles = JSON.parse(titles);
 
   const dates = await fs.readFile("lists/dateList.json", "utf8");
   const parsedDates = JSON.parse(dates);
 
-  const volumeStarts = await getVolumeStarts();
+  const volumeStarts = parsedTitles.filter((item) =>
+    item.title.includes("First Page")
+  );
 
-  volumeStarts.map((item, volumeIndex) => {
+  const volumeList = volumeStarts.map((item, volumeIndex) => {
     const lastDate =
-      volumeStarts[volumeIndex + 1] != null ? volumeStarts[volumeIndex + 1].date : "";
+      volumeStarts[volumeIndex + 1] != null
+        ? volumeStarts[volumeIndex + 1].date
+        : "";
 
     // volumeDates = step over dates from ${Volume (A) Start} to ${Volume (B) Start - 1}
     const volumeDates = parsedDates.slice(
@@ -32,19 +36,27 @@ const collectVolumes = async () => {
     );
 
     const volumePages = volumeDates.map((date, pageIndex) => {
-      const title = parsedTitles.find(item => item.date === date) != null ? parsedTitles[parsedTitles.indexOf(date)] : "" 
+      // TODO : fix getting titles for each date
+      const title = parsedTitles.find((item) => item.date === date);
 
       const page = {
         pageNumber: pageIndex + 1,
         date: date,
-        title: title,
+        title: title != null ? title.title : "",
         volumeNumber: volumeIndex + 1,
       };
       pages.push(page);
-      console.log(page)
       return page;
     });
+
+    return {
+      volumeStart: item.date,
+      volumeNumber: volumeIndex + 1,
+      pages: volumePages,
+    };
   });
+
+  console.log(volumeList[0])
 };
 // volumePages = volumeDates.map((date, index) => {
 //  const page = {pageNumber: index, date: date, title: title, volumeNumber: (A)}
