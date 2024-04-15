@@ -1,15 +1,5 @@
-// const { parseTitles } = require("./titles");
 const fs = require("node:fs/promises");
 
-// const getVolumeStarts = async () => {
-//   const titles = await parseTitles();
-//   const volumeStarts = titles.filter((item) =>
-//     item.title.includes("First Page")
-//   );
-//   return volumeStarts;
-// };
-
-//collectVolumes => VolumeType[]
 const collectVolumes = async () => {
   const pages = [];
   const volumes = [];
@@ -29,14 +19,12 @@ const collectVolumes = async () => {
         ? volumeStarts[volumeIndex + 1].date
         : "";
 
-    // volumeDates = step over dates from ${Volume (A) Start} to ${Volume (B) Start - 1}
     const volumeDates = parsedDates.slice(
       parsedDates.indexOf(item.date),
       parsedDates.indexOf(lastDate)
     );
 
     const volumePages = volumeDates.map((date, pageIndex) => {
-      // TODO : fix getting titles for each date
       const title = parsedTitles.find((item) => item.date === date);
 
       const page = {
@@ -56,16 +44,7 @@ const collectVolumes = async () => {
     };
   });
 
-  console.log(volumeList[0])
+  return {volumeList: volumeList, pageList: pages}
 };
-// volumePages = volumeDates.map((date, index) => {
-//  const page = {pageNumber: index, date: date, title: title, volumeNumber: (A)}
-//  pages.push(page)
-//  return page
-// )}
-// volumes.push({volumeStart: ${Volume (A) Start}, volumeNumber: (A), pages: volumePages})
-// return [pages, volumes]
-// PageType = {pageNumber: "number", date: "date", title: "title", volumeNumber: "number"}
-// VolumeType = {volumeStart: "date", volumeNumber: "number", pages: PageType[]}
 
 module.exports = { collectVolumes };
