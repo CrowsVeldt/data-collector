@@ -22,7 +22,7 @@ const fetchDates = async () => {
     } else {
       nextDateExists = false;
     }
-    fs.writeFile("dateList.json", JSON.stringify(dates));
+    fs.writeFile("lists/dateList.json", JSON.stringify(dates));
   }
 };
 
