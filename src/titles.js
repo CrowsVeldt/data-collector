@@ -1,4 +1,5 @@
 const { getPage } = require("./network");
+const fs = require("node:fs/promises")
 
 const getTitles = async () => {
   const res = await getPage();
@@ -13,6 +14,7 @@ const parseTitles = async () => {
   //const regex = new RegExp(/^([a-zA-Z0-9>'():.\-\s]*)(<\/option>)/g);
   const regex = new RegExp(/^(.*)(<\/option>)/g);
   const list = res.split("<option value='");
+  // const listMap = 
   return list.map((item) => {
     //console.log(item)
     const date = item.substring(0, 8);
@@ -25,5 +27,6 @@ const parseTitles = async () => {
     return { date: date, title: title };
   });
 };
+
 
 module.exports = { parseTitles };
