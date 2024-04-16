@@ -2,7 +2,6 @@ const fs = require("node:fs/promises");
 
 const collectVolumes = async () => {
   const pages = [];
-  const volumes = [];
   const titles = await fs.readFile("lists/titleList.json", "utf8");
   const parsedTitles = JSON.parse(titles);
 
@@ -24,8 +23,12 @@ const collectVolumes = async () => {
       parsedDates.indexOf(lastDate)
     );
 
+    const filteredTitles = parsedTitles.filter(
+      (item) => !item.title.includes("First Page")
+    );
+
     const volumePages = volumeDates.map((date, pageIndex) => {
-      const title = parsedTitles.find((item) => item.date === date);
+      const title = filteredTitles.find((item) => item.date === date);
 
       const page = {
         pageNumber: pageIndex + 1,
@@ -44,7 +47,8 @@ const collectVolumes = async () => {
     };
   });
 
-  return {volumeList: volumeList, pageList: pages}
+  fs.writeFile("lists/pageList.json", JSON.stringify(pages));
+  fs.writeFile("lists/volumeList.json", JSON.stringify(volumeList));
 };
 
 module.exports = { collectVolumes };
