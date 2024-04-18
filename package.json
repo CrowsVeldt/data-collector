@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "description": "Collects information for gg-reader app",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8"
+    "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
   }
 }
