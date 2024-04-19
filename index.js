@@ -22,7 +22,7 @@ app.get("/check", (req, res) => {
     // console.log("new dates: " + newDates.toString());
     res.send({ message: "New dates found", data: true });
   } else {
-    res.send({ message: "Already up to date" });
+    res.send({ message: "Already up to date", data: false });
   }
 });
 
