@@ -4,7 +4,8 @@
   "description": "Collects information for gg-reader app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dep-start": "node index.js"
   },
   "author": "",
   "license": "ISC",
