@@ -5,7 +5,6 @@ const volumes = require("./lists/volumeList.json");
 // const {fetchDates} = require("./src/dates");
 // const { parseTitles } = require("./src/titles");
 // const { collectVolumes } = require("./src/volumes");
-// collectVolumes()
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,8 +15,16 @@ app.get("/", (req, res) => {
 
 app.get("/check", (req, res) => {
   const { date } = req.query;
-  console.log(date);
-  res.send({ data: "date" });
+  const pageList = JSON.parse(pages);
+  const pageIndex = pageList.findIndex((item) => item.date === date);
+  console.log("pageIndex: " + pageIndex)
+  if (pageIndex !== -1 && pageIndex + 1 < pageList.length) {
+    const newDates = pageList.slice(pageIndex)
+    console.log("new dates: " + newDates.toString());
+    res.send({message: "New dates found", data: newDates})
+  } else {
+    res.send({message: "Already up to date"})
+  }
 });
 
 app.listen(3123, () => {
