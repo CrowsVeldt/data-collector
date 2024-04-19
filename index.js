@@ -15,15 +15,14 @@ app.get("/", (req, res) => {
 
 app.get("/check", (req, res) => {
   const { date } = req.query;
-  const pageList = JSON.parse(pages);
+  const pageList = pages;
   const pageIndex = pageList.findIndex((item) => item.date === date);
-  console.log("pageIndex: " + pageIndex)
-  if (pageIndex !== -1 && pageIndex + 1 < pageList.length) {
-    const newDates = pageList.slice(pageIndex)
+  if (pageIndex !== -1 && pageIndex < pageList.length - 1) {
+    const newDates = pageList.slice(pageIndex);
     console.log("new dates: " + newDates.toString());
-    res.send({message: "New dates found", data: newDates})
+    res.send({ message: "New dates found", data: newDates });
   } else {
-    res.send({message: "Already up to date"})
+    res.send({ message: "Already up to date" });
   }
 });
 
