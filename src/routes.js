@@ -1,14 +1,14 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const pages = require("../lists/pageList.json")
-const volumes = require("../lists/volumeList.json")
+const pages = require("../lists/pageList.json");
+const volumes = require("../lists/volumeList.json");
 
 router.get("/", (req, res) => {
   res.send({ pages, volumes });
 });
 
-router.get("/check", (req, res) => {
+router.get("/check", async (req, res) => {
   const { date } = req.query;
   const pageList = pages;
   const pageIndex = pageList.findIndex((item) => item.date === date);
@@ -21,4 +21,4 @@ router.get("/check", (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
