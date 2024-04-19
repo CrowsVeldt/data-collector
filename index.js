@@ -14,6 +14,11 @@ app.get("/", (req, res) =>{
     res.send({pages, volumes})
 })
 
+app.get("/check", (req, res) => {
+    const {date} = req.params
+    console.log(date)
+})
+
 app.listen(3123, () => {
   console.log("listening at port 3123");
 });
