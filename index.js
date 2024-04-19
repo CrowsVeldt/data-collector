@@ -1,5 +1,6 @@
 const bodyParser = require("body-parser");
 const express = require("express");
+const router = require("./src/routes.js")
 const pages = require("./lists/pageList.json");
 const volumes = require("./lists/volumeList.json");
 // const {fetchDates} = require("./src/dates");
@@ -9,22 +10,7 @@ const volumes = require("./lists/volumeList.json");
 const app = express();
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send({ pages, volumes });
-});
-
-app.get("/check", (req, res) => {
-  const { date } = req.query;
-  const pageList = pages;
-  const pageIndex = pageList.findIndex((item) => item.date === date);
-  if (pageIndex !== -1 && pageIndex < pageList.length - 1) {
-    // const newDates = pageList.slice(pageIndex);
-    // console.log("new dates: " + newDates.toString());
-    res.send({ message: "New dates found", data: true });
-  } else {
-    res.send({ message: "Already up to date", data: false });
-  }
-});
+app.use("/", router)
 
 app.listen(3123, () => {
   console.log("listening at port 3123");

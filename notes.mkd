@@ -1,3 +1,13 @@
+- if update note is recieved, check for new dates
+- if new dates are found update lists,
+- then send updated data in return 
+
+
+
+
+
+
+
 = process:
 
 - get data from site
