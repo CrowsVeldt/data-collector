@@ -1,9 +1,9 @@
 const fs = require("node:fs/promises");
+const { parseTitles } = require("./titles");
 
 const collectVolumes = async () => {
   const pages = [];
-  const titles = await fs.readFile("lists/titleList.json", "utf8");
-  const parsedTitles = JSON.parse(titles);
+  const parsedTitles = await parseTitles()
 
   const dates = await fs.readFile("lists/dateList.json", "utf8");
   const parsedDates = JSON.parse(dates);
