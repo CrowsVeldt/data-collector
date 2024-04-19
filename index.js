@@ -18,9 +18,9 @@ app.get("/check", (req, res) => {
   const pageList = pages;
   const pageIndex = pageList.findIndex((item) => item.date === date);
   if (pageIndex !== -1 && pageIndex < pageList.length - 1) {
-    const newDates = pageList.slice(pageIndex);
-    console.log("new dates: " + newDates.toString());
-    res.send({ message: "New dates found", data: newDates });
+    // const newDates = pageList.slice(pageIndex);
+    // console.log("new dates: " + newDates.toString());
+    res.send({ message: "New dates found", data: true });
   } else {
     res.send({ message: "Already up to date" });
   }
