@@ -1,6 +1,6 @@
 const { getPage } = require("./network");
 const fs = require("node:fs/promises");
-const dateList = require("../lists/dateList.json")
+const dateList = require("../lists/dateList.json");
 
 const getNextDate = async (date) => {
   const { data } = await getPage(date);
@@ -10,15 +10,13 @@ const getNextDate = async (date) => {
 };
 
 const fetchDates = async () => {
-  // console.log(dateList)
-  const dates = dateList.length > 0 ? dateList : ["20021104"]; // if date list is present, get last date
+  const dates = dateList.length > 0 ? dateList : ["20021104"];
   const regex = new RegExp(/[\d]{8}/);
 
   let nextDateExists = true;
 
   while (nextDateExists) {
     const nextDate = await getNextDate(dates[dates.length - 1]);
-    // console.log(nextDate);
     if (regex.test(nextDate)) {
       dates.push(nextDate);
     } else {
