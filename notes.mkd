@@ -1,12 +1,4 @@
-- if update note is recieved, check for new dates
-- if new dates are found update lists,
-- then send updated data in return 
-
-
-
-
-
-
+update on comic release mon/wed/fri (cron job?)
 
 = process:
 
@@ -23,3 +15,7 @@
 - process response into data lists (pages/volumes)
 - - IF there are current data files, append the new data to them
 - - ELSE write data to files
+
+x if update note is recieved, check for new dates
+x if new dates are found update lists,
+x then send updated data in return 
