@@ -1,5 +1,6 @@
+const FS = require("node:fs/promises");
+const PATH = require("node:path")
 const { getPage } = require("./network");
-const fs = require("node:fs/promises");
 const dateList = require("../lists/dateList.json");
 
 const getNextDate = async (date) => {
@@ -10,6 +11,7 @@ const getNextDate = async (date) => {
 };
 
 const fetchDates = async () => {
+  const root = PATH.resolve("./")
   const dates = dateList.length > 0 ? dateList : ["20021104"];
   const regex = new RegExp(/[\d]{8}/);
 
@@ -22,7 +24,7 @@ const fetchDates = async () => {
     } else {
       nextDateExists = false;
     }
-    fs.writeFile("lists/dateList.json", JSON.stringify(dates));
+    FS.writeFile(`${root}/lists/dateList.json`, JSON.stringify(dates));
   }
 };
 

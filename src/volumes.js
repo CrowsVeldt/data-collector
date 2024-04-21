@@ -1,11 +1,12 @@
-const fs = require("node:fs/promises");
+const FS = require("node:fs/promises");
+const PATH = require("node:path")
 const { parseTitles } = require("./titles");
 
 const collectVolumes = async () => {
+  const root = PATH.resolve("./")
   const pages = [];
   const parsedTitles = await parseTitles()
-
-  const dates = await fs.readFile("lists/dateList.json", "utf8");
+  const dates = await FS.readFile(`${root}/lists/dateList.json`, "utf8");
   const parsedDates = JSON.parse(dates);
 
   const volumeStarts = parsedTitles.filter((item) =>
@@ -47,8 +48,8 @@ const collectVolumes = async () => {
     };
   });
 
-  fs.writeFile("lists/pageList.json", JSON.stringify(pages));
-  fs.writeFile("lists/volumeList.json", JSON.stringify(volumeList));
+  FS.writeFile(`${root}/lists/pageList.json`, JSON.stringify(pages));
+  FS.writeFile(`${root}/lists/volumeList.json`, JSON.stringify(volumeList));
 };
 
 module.exports = { collectVolumes };
