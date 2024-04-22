@@ -5,9 +5,6 @@ const dates = require("../lists/dateList.json");
 const pages = require("../lists/pageList.json");
 const volumes = require("../lists/volumeList.json");
 
-const { fetchDates } = require("./dates.js");
-const { collectVolumes } = require("./volumes.js");
-
 router.get("/", (req, res) => {
   res.send({ pages, volumes });
 });
@@ -25,14 +22,6 @@ router.get("/check", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-router.get("/update/dates", async (req, res) => {
-  fetchDates();
-});
-
-router.get("/update/volumes", async (req, res) => {
-  collectVolumes();
 });
 
 module.exports = router;
