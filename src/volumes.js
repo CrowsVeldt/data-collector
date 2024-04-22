@@ -17,11 +17,11 @@ const collectVolumes = async () => {
     const lastDate =
       volumeStarts[volumeIndex + 1] != null
         ? volumeStarts[volumeIndex + 1].date
-        : "";
+        : null
 
     const volumeDates = parsedDates.slice(
       parsedDates.indexOf(item.date),
-      parsedDates.indexOf(lastDate)
+      lastDate != null ? parsedDates.indexOf(lastDate) : parsedDates.length
     );
 
     const filteredTitles = parsedTitles.filter(
