@@ -28,7 +28,8 @@ router.get("/check", async (req, res) => {
 
 router.get("/update/dates", async (req, res) => {
   try {
-    fetchDates();
+    await fetchDates();
+    res.send(dates)
   } catch (error) {
     console.error("an error occured fetching dates");
   }
