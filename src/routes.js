@@ -26,7 +26,7 @@ router.get("/check", async (req, res) => {
   }
 });
 
-router.post("/update/dates", async (req, res) => {
+router.get("/update/dates", async (req, res) => {
   try {
     fetchDates();
   } catch (error) {
