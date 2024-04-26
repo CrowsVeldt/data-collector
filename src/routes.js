@@ -29,7 +29,7 @@ router.get("/check", async (req, res) => {
 router.get("/update/dates", async (req, res) => {
   try {
     await fetchDates();
-    res.send(dates)
+    res.send(dates);
   } catch (error) {
     console.error("an error occured fetching dates");
   }
@@ -38,10 +38,10 @@ router.get("/update/dates", async (req, res) => {
 router.get("/update/volumes", async (req, res) => {
   try {
     await collectVolumes();
-    res.send({ pages, volumes });
   } catch (error) {
-    console.error("error collecting and/or sending page/volume data ")
+    console.error("error collecting and/or sending page/volume data ");
   }
+  res.send({ pages, volumes });
 });
 
 module.exports = router;
