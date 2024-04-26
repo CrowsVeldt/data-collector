@@ -9,12 +9,16 @@ const { collectVolumes } = require("./src/volumes.js");
 const app = express();
 app.use(bodyParser.json());
 
-cron.schedule("20 9 * * 0-6", () => {
-  fetchDates();
+cron.schedule("20 9 * * 0-6", async () => {
+  console.log("Checking for new pages")
+  await fetchDates();
+  console.log("Finished checking")
 });
 
-cron.schedule("40 9 * * 0-6", () => {
-  collectVolumes();
+cron.schedule("40 9 * * 0-6", async () => {
+  console.log("Collecting data into volumes and pages")
+  await collectVolumes();
+  console.log("Finished collecting data")
 });
 
 app.use("/", router);
