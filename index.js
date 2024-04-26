@@ -9,11 +9,11 @@ const { collectVolumes } = require("./src/volumes.js");
 const app = express();
 app.use(bodyParser.json());
 
-cron.schedule("0 9 * * 0-6", () => {
+cron.schedule("20 9 * * 0-6", () => {
   fetchDates();
 });
 
-cron.schedule("30 9 * * 0-6", () => {
+cron.schedule("40 9 * * 0-6", () => {
   collectVolumes();
 });
 
