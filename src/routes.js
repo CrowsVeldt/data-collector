@@ -4,6 +4,8 @@ const router = express.Router();
 const dates = require("../lists/dateList.json");
 const pages = require("../lists/pageList.json");
 const volumes = require("../lists/volumeList.json");
+const { fetchDates } = require("./dates");
+const { collectVolumes } = require("./volumes");
 
 router.get("/", (req, res) => {
   res.send({ pages, volumes });
@@ -21,6 +23,23 @@ router.get("/check", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/update/dates", async (req, res) => {
+  try {
+    fetchDates();
+  } catch (error) {
+    console.error("an error occured fetching dates");
+  }
+});
+
+router.get("/update/volumes", async (req, res) => {
+  try {
+    await collectVolumes();
+    res.send({ pages, volumes });
+  } catch (error) {
+    console.error("error collecting and/or sending page/volume data ")
   }
 });
 
