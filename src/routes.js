@@ -8,15 +8,17 @@ const { collectVolumes } = require("./volumes");
 const root = PATH.resolve("./");
 
 router.get("/", async (req, res) => {
+  const dateFile = await FS.readFile(`${root}/lists/dateList.json`, "utf-8")
   const pageFile = await FS.readFile(`${root}/lists/pageList.json`, "utf-8");
   const volumeFile = await FS.readFile(
     `${root}/lists/volumeList.json`,
     "utf-8"
   );
+  const dates = JSON.parse(dateFile)
   const pages = JSON.parse(pageFile);
   const volumes = JSON.parse(volumeFile);
 
-  res.send({ pages, volumes });
+  res.send({ dates, pages, volumes });
 });
 
 router.get("/check", async (req, res) => {
